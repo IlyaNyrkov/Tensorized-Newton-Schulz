@@ -56,6 +56,7 @@ int main() {
     CHECK_CUDA(cudaEventCreate(&stop));
 
     std::cout << "Starting Benchmark (Rows = " << m << ")" << std::endl;
+    std::cout << "Degree " << degree + 1 << "Newton Schulz" << std::endl;
     std::cout << "Rows,Cols,Naive_Time_ms,PS_Time_ms,Max_Rel_Error,Match_Status" << std::endl;
 
     for (int n : n_sizes) {
