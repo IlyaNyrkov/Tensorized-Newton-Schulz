@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <cuda_runtime.h>
 #include <cublas_v2.h>
-#include "ns_ps.cuh"
+#include "../src/common/paterson_stockmeyer.cuh"
 
 template<typename T>
 void generate_normalized_matrix(std::vector<T>& mat, int rows, int cols, T phi = 0.5, int seed = 42) {
