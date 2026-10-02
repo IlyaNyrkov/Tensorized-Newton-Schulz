@@ -1,3 +1,6 @@
 .idea/
 .vscode/
 build/
+submit.sh
+submit.sh_*
+slurm_result.out

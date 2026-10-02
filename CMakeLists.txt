@@ -1,17 +1,19 @@
-cmake_minimum_required(VERSION 3.18)
-project(TensorizedNewtonSchulz LANGUAGES CXX CUDA)
+cmake_minimum_required(VERSION 3.24)
+project(Tensorized-Newton-Schulz LANGUAGES CXX CUDA)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -O3")
+# Set CUDA architectures BEFORE any target uses CUDA.
+# "90a" = Hopper arch-specific (TMA/wgmma), "100a" = Blackwell arch-specific.
+# "90-real"/"100-real" would exclude PTX; plain "90"/"100" include PTX for forward compat.
+if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
+    set(CMAKE_CUDA_ARCHITECTURES "90;90a;100;100a" CACHE STRING "CUDA architectures to build for")
+endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+# Optional: silence CMake's arch warning, and require a recent CUDA toolkit for B200
+# set(CMAKE_CUDA_COMPILER_ID ...)
 
-find_package(CUDAToolkit REQUIRED)
-
-# 1. Point to the root utils directory instead of src/utils
 add_subdirectory(utils)
 add_subdirectory(src/common)
 add_subdirectory(benchmarks)
